@@ -32,11 +32,11 @@ class ChloeServiceCICDPipeline extends cdk.Stack {
     constructor(
         scope: cdk.Construct,
         id: string,
-        props: ChloeServiceCICDPipelineProps,
+        props?: ChloeServiceCICDPipelineProps,
     ) {
         super(scope, id, props);
     
-        const { ppdStack, prdStack } = props;
+        // const { ppdStack, prdStack } = props;
 
         // Source code - Github
         const sourceOutput = new Artifact();
@@ -110,7 +110,7 @@ class ChloeServiceCICDPipeline extends cdk.Stack {
             actionName: 'ChloeFunc_Cfn_Deploy_Preproduction',
             templatePath: templateArtifactPathPPD,
             parameterOverrides: {
-                ...ppdStack.lambdaCode.assign(chloeFuncBuildOutputPPD.s3Location),
+                // ...ppdStack.lambdaCode.assign(chloeFuncBuildOutputPPD.s3Location),
             },
             stackName: `${ChloeServiceStack.STACK_NAME}${Environment.PPD}`,
             adminPermissions: true,
@@ -126,7 +126,7 @@ class ChloeServiceCICDPipeline extends cdk.Stack {
             actionName: 'ChloeFunc_Cfn_Deploy_Production',
             templatePath: templateArtifactPathPRD,
             parameterOverrides: {
-                ...prdStack.lambdaCode.assign(chloeFuncBuildOutputPRD.s3Location),
+                // ...prdStack.lambdaCode.assign(chloeFuncBuildOutputPRD.s3Location),
             },
             stackName: `${ChloeServiceStack.STACK_NAME}${Environment.PRD}`,
             adminPermissions: true,
@@ -162,7 +162,7 @@ class ChloeServiceCICDPipeline extends cdk.Stack {
                         new ManualApprovalAction({
                             actionName: 'DeployChloeServiceToProductionApproval',
                             additionalInformation: 'Ready to deploy to Production?',
-                            externalEntityLink: ppdStack.apiURL,
+                            // externalEntityLink: ppdStack.apiURL,
                             runOrder: 2,
                         }),
                     ],
