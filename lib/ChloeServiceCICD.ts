@@ -162,7 +162,7 @@ class ChloeServiceCICDPipeline extends cdk.Stack {
                         new ManualApprovalAction({
                             actionName: 'DeployChloeServiceToProductionApproval',
                             additionalInformation: 'Ready to deploy to Production?',
-                            externalEntityLink: ppdStack.apiURL,
+                            // externalEntityLink: ppdStack.apiURL,
                             runOrder: 2,
                         }),
                     ],
