@@ -39,12 +39,12 @@ class ChloeServiceCICDPipeline extends cdk.Stack {
         const { ppdStack, prdStack } = props;
 
         // Source code - Github
-        const sourceOutput = new Artifact();
+        const appSourceOutput = new Artifact();
         const codeStarAction = new CodeStarConnectionsSourceAction({
             actionName: 'CheckoutFromGithub',
             // eslint-disable-next-line max-len
             connectionArn: 'arn:aws:codestar-connections:us-east-1:502192330072:connection/8dafd691-9f69-4553-a212-735cb6810389',
-            output: sourceOutput,
+            output: appSourceOutput,
             owner: 'TestLambdaProjectOrg',
             repo: 'ChloeService',
             branch: 'main',
@@ -82,7 +82,7 @@ class ChloeServiceCICDPipeline extends cdk.Stack {
         const chloeFuncBuildActionPPD = new CodeBuildAction({
             actionName: 'ChloeFuncPPD_BuildAction',
             project: chloeFuncBuildProjectPPD,
-            input: sourceOutput,
+            input: appSourceOutput,
             outputs: [chloeFuncBuildOutputPPD],
         });
 
@@ -97,7 +97,7 @@ class ChloeServiceCICDPipeline extends cdk.Stack {
         const chloeFuncBuildActionPRD = new CodeBuildAction({
             actionName: 'ChloeFunc_BuildAction',
             project: chloeFuncBuildProjectPRD,
-            input: sourceOutput,
+            input: appSourceOutput,
             outputs: [chloeFuncBuildOutputPRD],
         });
 
